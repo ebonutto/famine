@@ -1,5 +1,7 @@
 #include "famine.h"
 
+#include <sys/stat.h> // struct stat, S_ISREG()
+
 #include <limits.h> // PATH_MAX
 #include <stdio.h> // snprintf()
 #include <string.h> // strcmp()
@@ -17,7 +19,7 @@ static int get_entry_type(const char *full_path)
 	return (DT_UNKNOWN);
 }
 
-static void process_entry(const char *path, struct dirent *entry)
+void process_entry(const char *path, struct dirent *entry)
 {
 	int ret;
 	char full_path[PATH_MAX];

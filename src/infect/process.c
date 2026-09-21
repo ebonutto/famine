@@ -1,8 +1,11 @@
 #include "famine.h"
 
-void process_file(const char *full_path)
+void process_file(const char *path)
 {
-	t_elf_ctx ctx;
+	t_file file;
 
-	map_file();
+	if (file_load(&file, path))
+		return ;
+
+	file_unload(&file);
 }
