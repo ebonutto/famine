@@ -1,6 +1,6 @@
 #include "famine.h"
 
-#include <sys/stat.h> // struct stat, S_ISREG()
+#include <sys/stat.h> // struct stat, lstat(), S_ISDIR(), S_ISREG()
 
 #include <limits.h> // PATH_MAX
 #include <stdio.h> // snprintf()
