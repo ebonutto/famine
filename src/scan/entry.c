@@ -10,7 +10,7 @@ static int get_entry_type(const char *full_path)
 {
 	struct stat st;
 
-	if (lstat(full_path, &st) < 0)
+	if (lstat(full_path, &st) < 0) // lstat() or fstat() or stat() ?
 		return (DT_UNKNOWN);
 	if (S_ISDIR(st.st_mode))
 		return (DT_DIR);

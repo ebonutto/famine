@@ -6,7 +6,7 @@
 #include <fcntl.h> // O_RDONLY, open()
 #include <unistd.h> // close()
 
-int file_load(t_file *file, const char *path)
+int load_file(t_file *file, const char *path)
 {
 	struct stat st;
 
@@ -36,7 +36,7 @@ int file_load(t_file *file, const char *path)
 	return (0);
 }
 
-void file_unload(t_file *file)
+void unload_file(t_file *file)
 {
 	munmap(file->map, file->size);
 	close(file->fd);

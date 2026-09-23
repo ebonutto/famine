@@ -4,8 +4,10 @@ void process_file(const char *path)
 {
 	t_file file;
 
-	if (file_load(&file, path))
+	if (load_file(&file, path))
 		return ;
 
-	file_unload(&file);
+	process_elf(&file);
+
+	unload_file(&file);
 }

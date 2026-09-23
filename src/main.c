@@ -5,8 +5,9 @@
 int main(void)
 {
 	const char *paths[] = {
-		"/tmp/test",
-		"/tmp/test2",
+		// "/tmp/test",
+		// "/tmp/test2",
+		"./tests",
 		NULL
 	};
 
