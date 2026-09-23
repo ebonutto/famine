@@ -1,6 +1,6 @@
 #include "famine.h"
 
-#include <elf.h>
+#include <elf.h> // EI_NIDENT, EI_CLASS, EI_DATA, EI_MAGX, ELFCLASSX, ELFDATA2LSB, ELFMAGX
 
 int is_valid_elf(t_file *file)
 {
