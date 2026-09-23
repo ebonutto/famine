@@ -1,6 +1,6 @@
 #include "famine.h"
 
-#include <sys/stat.h> // struct stat, lstat(), S_ISDIR(), S_ISREG()
+#include <sys/stat.h> // DT_DIR, DT_UNKNOWN, DT_REG, struct stat, lstat(), S_ISDIR(), S_ISREG()
 
 #include <limits.h> // PATH_MAX
 #include <stdio.h> // snprintf()
@@ -10,7 +10,7 @@ static int get_entry_type(const char *full_path)
 {
 	struct stat st;
 
-	if (lstat(full_path, &st) < 0) // lstat() or fstat() or stat() ?
+	if (lstat(full_path, &st) < 0)
 		return (DT_UNKNOWN);
 	if (S_ISDIR(st.st_mode))
 		return (DT_DIR);
