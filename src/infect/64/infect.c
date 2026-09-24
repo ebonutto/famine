@@ -44,10 +44,10 @@ int sign_elf64_cavity(t_file *file, t_elf64 *elf64)
 	return (1);
 }
 
-int sign_elf64_append(t_file *file, t_elf64 *elf64)
-{
+// int sign_elf64_append(t_file *file, t_elf64 *elf64)
+// {
 
-}
+// }
 
 void infect_elf64(t_file *file, t_elf64 *elf64)
 {
