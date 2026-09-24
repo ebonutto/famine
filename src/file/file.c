@@ -25,8 +25,8 @@ int load_file(t_file *file, const char *path)
 		return (1);
 	}
 
-	file->map = mmap(NULL, st.st_size, PROT_READ | PROT_WRITE, MAP_SHARED,
-	                file->fd, 0);
+	file->map = mmap(NULL, st.st_size, PROT_READ | PROT_WRITE,
+	                 MAP_SHARED, file->fd, 0);
 	if (file->map == MAP_FAILED) {
 		close(file->fd);
 		return (1);
