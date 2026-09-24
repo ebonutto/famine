@@ -41,7 +41,7 @@ int is_valid_elf(t_file *file);
 
 void process_elf64(t_file *file);
 int parse_elf64(t_file *file, t_elf64 *elf64);
-uint64_t elf64_find_next_segment_offset(Elf64_Phdr *phdr, uint32_t phnum, uint32_t index);
+uint64_t elf64_find_next_segment(Elf64_Phdr *phdr, uint32_t phnum, uint32_t index);
 void infect_elf64(t_file *file, t_elf64 *elf64);
 int sign_elf64_cavity(t_file *file, t_elf64 *elf64);
 
