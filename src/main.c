@@ -1,6 +1,6 @@
 #include "famine.h"
 
-#include <stddef.h> // NULL
+#include <stddef.h> // NULL, size_t
 
 int main(void)
 {

@@ -1,5 +1,6 @@
 #include "famine.h"
 
+#include <elf.h> // Elf64_Phdr
 #include <limits.h> // UINT64_MAX
 #include <stdint.h> // uintX_t
 

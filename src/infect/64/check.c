@@ -1,6 +1,6 @@
 #include "famine.h"
 
-#include <stdint.h> // uint32_t
+#include <stdint.h> // uintX_t
 
 int is_elf64_infected(t_elf64 *elf64)
 {

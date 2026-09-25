@@ -3,6 +3,7 @@
 #include <sys/stat.h> // DT_DIR, DT_UNKNOWN, DT_REG, struct stat, lstat(), S_ISDIR(), S_ISREG()
 
 #include <limits.h> // PATH_MAX
+#include <stddef.h> // size_t
 #include <stdio.h> // snprintf()
 #include <string.h> // strcmp()
 
@@ -24,9 +25,8 @@ static int get_entry_type(const char *full_path)
 
 void process_entry(const char *path, struct dirent *entry)
 {
-	int ret;
 	char full_path[PATH_MAX];
-	int type;
+	int ret, type;
 
 	if (strcmp(entry->d_name, ".") == 0
 	    || strcmp(entry->d_name, "..") == 0)
