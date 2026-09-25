@@ -4,6 +4,7 @@
 #include <sys/stat.h> // struct stat, S_ISREG(), fstat()
 
 #include <fcntl.h> // O_RDWR, open()
+#include <stddef.h> // NULL
 #include <unistd.h> // close()
 
 int open_file(t_file *file, const char *path)
@@ -36,25 +37,15 @@ void close_file(t_file *file)
 
 int map_file(t_file *file)
 {
-	file->map = mmap(NULL, st.st_size,
+	file->map = mmap(NULL, file->size,
 	                 PROT_READ | PROT_WRITE,
 	                 MAP_SHARED, file->fd, 0);
 	if (file->map == MAP_FAILED)
-		file->map
 		return (1);
 	return (0);
 }
 
-int unmap_file(t_file *file)
+void unmap_file(t_file *file)
 {
-	if (!file->map)
-		return (0);
-
-	if (munmap(file->map, file->size) < 0) {
-		file->map = MAP_FAILED;
-		return (1);
-	}
-
-	file->map = NULL;
-	return (0);
+	munmap(file->map, file->size);
 }
