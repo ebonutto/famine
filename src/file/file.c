@@ -3,7 +3,7 @@
 #include <sys/mman.h> // MAP_FAILED, MAP_SHARED, PROT_READ, PROT_WRITE, munmap(), mmap()
 #include <sys/stat.h> // struct stat, S_ISREG(), fstat()
 
-#include <fcntl.h> // O_RDONLY, open()
+#include <fcntl.h> // O_RDWR, open()
 #include <unistd.h> // close()
 
 int load_file(t_file *file, const char *path)
@@ -25,7 +25,8 @@ int load_file(t_file *file, const char *path)
 		return (1);
 	}
 
-	file->map = mmap(NULL, st.st_size, PROT_READ | PROT_WRITE,
+	file->map = mmap(NULL, st.st_size,
+	                 PROT_READ | PROT_WRITE,
 	                 MAP_SHARED, file->fd, 0);
 	if (file->map == MAP_FAILED) {
 		close(file->fd);

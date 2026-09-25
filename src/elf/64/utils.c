@@ -1,5 +1,6 @@
 #include "famine.h"
 
+#include <limits.h> // UINT64_MAX
 #include <stdint.h> // uintX_t
 
 uint64_t elf64_find_next_segment(Elf64_Phdr *phdr, uint32_t phnum, uint32_t index)

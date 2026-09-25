@@ -1,6 +1,6 @@
 #include "famine.h"
 
-#include <elf.h> // EI_CLASS
+#include <elf.h> // EI_CLASS, ELFCLASSX
 
 void process_elf(t_file *file)
 {

