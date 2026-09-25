@@ -11,9 +11,8 @@ void scan_directory(const char *path)
 	if (dir == NULL)
 		return ;
 
-	while ((entry = readdir(dir)) != NULL) {
+	while ((entry = readdir(dir)) != NULL)
 		process_entry(path, entry);
-	}
 
 	closedir(dir);
 }
