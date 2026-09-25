@@ -1,7 +1,6 @@
 #include "famine.h"
 
-#include <limits.h> // UINT64_MAX
-#include <stdint.h> // uintX_t
+#include <stdint.h> // uintX_t, UINT64_MAX
 #include <string.h> // memcpy()
 
 int sign_elf64_cavity(t_file *file, t_elf64 *elf64)
