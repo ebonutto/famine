@@ -28,7 +28,7 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 fclean: clean
-	rm -f $(NAME) ./woody
+	rm -f $(NAME)
 
 re: fclean all
 
