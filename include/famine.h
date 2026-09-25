@@ -34,8 +34,10 @@ void scan_directory(const char *path);
 void process_entry(const char *path, struct dirent *entry);
 void process_file(const char *path);
 
-int load_file(t_file *file, const char *path);
-void unload_file(t_file *file);
+int open_file(t_file *file, const char *path);
+void close_file(t_file *file);
+int map_file(t_file *file);
+int unmap_file(t_file *file);
 
 void process_elf(t_file *file);
 int is_valid_elf(t_file *file);

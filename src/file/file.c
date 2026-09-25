@@ -6,7 +6,7 @@
 #include <fcntl.h> // O_RDWR, open()
 #include <unistd.h> // close()
 
-int load_file(t_file *file, const char *path)
+int open_file(t_file *file, const char *path)
 {
 	struct stat st;
 
@@ -25,20 +25,36 @@ int load_file(t_file *file, const char *path)
 		return (1);
 	}
 
-	file->map = mmap(NULL, st.st_size,
-	                 PROT_READ | PROT_WRITE,
-	                 MAP_SHARED, file->fd, 0);
-	if (file->map == MAP_FAILED) {
-		close(file->fd);
-		return (1);
-	}
-
 	file->size = st.st_size;
 	return (0);
 }
 
-void unload_file(t_file *file)
+void close_file(t_file *file)
 {
-	munmap(file->map, file->size);
 	close(file->fd);
+}
+
+int map_file(t_file *file)
+{
+	file->map = mmap(NULL, st.st_size,
+	                 PROT_READ | PROT_WRITE,
+	                 MAP_SHARED, file->fd, 0);
+	if (file->map == MAP_FAILED)
+		file->map
+		return (1);
+	return (0);
+}
+
+int unmap_file(t_file *file)
+{
+	if (!file->map)
+		return (0);
+
+	if (munmap(file->map, file->size) < 0) {
+		file->map = MAP_FAILED;
+		return (1);
+	}
+
+	file->map = NULL;
+	return (0);
 }
