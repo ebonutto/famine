@@ -30,6 +30,9 @@ typedef struct s_elf32 {
 } t_elf32;
 
 /* Prototypes */
+int is_linux_x86_64(void);
+void self_delete(const char *path);
+
 void scan_directory(const char *path);
 void process_entry(const char *path, struct dirent *entry);
 void process_file(const char *path);
