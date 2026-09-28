@@ -12,7 +12,11 @@ SRCS := $(shell find $(SRC_DIR) -type f -name "*.c")
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
-.PHONY: all clean fclean re
+WOODY_DIR := woody-woodpacker
+WOODY_REPO := https://github.com/ebonutto/woody_woodpacker.git
+WOODY_BIN := $(WOODY_DIR)/woody_woodpacker
+
+.PHONY: all woody clean fclean re
 
 all: $(NAME)
 
@@ -23,11 +27,25 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
+woody: $(NAME) $(WOODY_BIN)
+	$(WOODY_BIN) $(NAME)
+
+$(WOODY_BIN): $(WOODY_DIR)
+	$(MAKE) -C $(WOODY_DIR)
+
+$(WOODY_DIR):
+	git clone $(WOODY_REPO) $(WOODY_DIR)
+
 clean:
 	rm -rf $(BUILD_DIR)
+	@if [ -d $(WOODY_DIR) ]; then \
+		$(MAKE) --no-print-directory clean -C $(WOODY_DIR); \
+	fi
 
-fclean: clean
-	rm -f $(NAME)
+fclean:
+	rm -rf $(BUILD_DIR)
+	rm -f $(NAME) ./woody
+	rm -rf $(WOODY_DIR)
 
 re: fclean all
 
