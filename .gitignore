@@ -57,3 +57,5 @@ dkms.conf
 # Current project
 .build
 ./famine
+./woody-woodpacker
+./woody

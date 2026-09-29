@@ -16,7 +16,7 @@ WOODY_DIR := woody-woodpacker
 WOODY_REPO := https://github.com/ebonutto/woody_woodpacker.git
 WOODY_BIN := $(WOODY_DIR)/woody_woodpacker
 
-.PHONY: all woody clean fclean re
+.PHONY: all woody clean fclean rclean re
 
 all: $(NAME)
 
@@ -31,20 +31,18 @@ woody: $(NAME) $(WOODY_BIN)
 	$(WOODY_BIN) $(NAME)
 
 $(WOODY_BIN): $(WOODY_DIR)
-	$(MAKE) -C $(WOODY_DIR)
+	$(MAKE) -C $(WOODY_DIR) --no-print-directory
 
 $(WOODY_DIR):
 	git clone $(WOODY_REPO) $(WOODY_DIR)
 
 clean:
 	rm -rf $(BUILD_DIR)
-	@if [ -d $(WOODY_DIR) ]; then \
-		$(MAKE) --no-print-directory clean -C $(WOODY_DIR); \
-	fi
 
-fclean:
-	rm -rf $(BUILD_DIR)
+fclean: clean
 	rm -f $(NAME) ./woody
+
+rclean:
 	rm -rf $(WOODY_DIR)
 
 re: fclean all
