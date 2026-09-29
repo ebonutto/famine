@@ -1,5 +1,6 @@
 #include "famine.h"
 
+#include <stddef.h> // NULL
 #include <string.h> // memmem()
 
 int is_file_infected(t_file *file)

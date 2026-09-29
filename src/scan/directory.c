@@ -1,6 +1,7 @@
 #include "famine.h"
 
 #include <dirent.h> // DIR, struct dirent, closedir(), opendir(), readdir()
+#include <stddef.h> // NULL
 
 void scan_directory(const char *path)
 {
