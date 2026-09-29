@@ -54,8 +54,12 @@ dkms.conf
 # debug information files
 *.dwo
 
-# Current project
-.build
-./famine
-./woody-woodpacker
-./woody
+# Build
+.build/
+
+# Binaries
+famine
+woody
+
+# Dependencies
+woody-woodpacker/
