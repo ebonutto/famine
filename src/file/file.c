@@ -44,16 +44,7 @@ int map_file(t_file *file)
 	return (0);
 }
 
-int unmap_file(t_file *file)
+void unmap_file(t_file *file)
 {
-	int ret;
-
-	if (file->map == NULL || file->map == MAP_FAILED)
-		return (0);
-
-	ret = munmap(file->map, file->size);
-	file->map = NULL;
-	if (ret < 0)
-		return (1);
-	return (0);
+	munmap(file->map, file->size);
 }
