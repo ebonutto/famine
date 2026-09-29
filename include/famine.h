@@ -3,9 +3,9 @@
 
 /* Includes */
 #include <dirent.h> // struct dirent
-#include <elf.h> // Elf64_Ehdr, Elf64_Phdr
+#include <elf.h> // ElfN_Ehdr, ElfN_Phdr
 #include <stddef.h> // size_t
-#include <stdint.h> // uintX_t
+#include <stdint.h> // uintN_t
 
 /* Defines */
 #define SIGNATURE "FAMINE"
