@@ -37,15 +37,23 @@ void close_file(t_file *file)
 
 int map_file(t_file *file)
 {
-	file->map = mmap(NULL, file->size,
-	                 PROT_READ | PROT_WRITE,
+	file->map = mmap(NULL, file->size, PROT_READ | PROT_WRITE,
 	                 MAP_SHARED, file->fd, 0);
 	if (file->map == MAP_FAILED)
 		return (1);
 	return (0);
 }
 
-void unmap_file(t_file *file)
+int unmap_file(t_file *file)
 {
-	munmap(file->map, file->size);
+	int ret;
+
+	if (file->map == NULL || file->map == MAP_FAILED)
+		return (0);
+
+	ret = munmap(file->map, file->size);
+	file->map = NULL;
+	if (ret < 0)
+		return (1);
+	return (0);
 }

