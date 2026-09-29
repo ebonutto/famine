@@ -2,7 +2,7 @@
 
 #include <stddef.h> // NULL, size_t
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	const char *paths[] = {
 		// "/tmp/test",
@@ -10,12 +10,6 @@ int main(int argc, char *argv[])
 		"./tests",
 		NULL
 	};
-
-	(void)argc;
-
-	if (!is_linux_x86_64()) {
-		self_delete(argv[0]);
-	}
 
 	for (size_t i = 0; paths[i]; i++)
 		scan_directory(paths[i]);
