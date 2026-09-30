@@ -4,8 +4,8 @@
 #include <stdint.h> // uintN_t, UINTN_MAX
 #include <string.h> // memcpy()
 
-static uint64_t elf64_find_next_segment(Elf64_Phdr *phdr, uint32_t phnum,
-                                        uint32_t index)
+static uint64_t elf64_find_next_segment(Elf64_Phdr *phdr, uint16_t phnum,
+                                        uint16_t index)
 {
 	uint64_t curr, next, tmp;
 
@@ -36,7 +36,8 @@ int sign_elf64_cavity(t_file *file, t_elf64 *elf64)
 
 		cave_start = elf64->phdr[i].p_offset + elf64->phdr[i].p_filesz;
 		cave_end = elf64_find_next_segment(elf64->phdr,
-			                           elf64->ehdr->e_phnum, i);
+		                                   elf64->ehdr->e_phnum,
+		                                   (uint16_t)i);
 
 		if (cave_end == UINT64_MAX)
 			continue ;
