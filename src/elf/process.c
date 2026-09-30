@@ -11,6 +11,6 @@ int process_elf(t_file *file)
 	if (ident[EI_CLASS] == ELFCLASS64)
 		return (process_elf64(file));
 
-	// return (process_elf32(file));
-	return (0);
+	// The ident[EI_CLASS] == ELFCLASS32 condition is already verified
+	return (process_elf32(file));
 }

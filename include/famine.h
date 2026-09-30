@@ -49,9 +49,9 @@ int parse_elf64(t_file *file, t_elf64 *elf64);
 int infect_elf64(t_file *file, t_elf64 *elf64);
 int sign_elf64_cavity(t_file *file, t_elf64 *elf64);
 
-// int process_elf32(t_file *file);
-// int parse_elf32(t_file *file, t_elf32 *elf32);
-// int infect_elf32(t_file *file, t_elf32 *elf32);
-// int sign_elf32_cavity(t_file *file, t_elf32 *elf32);
+int process_elf32(t_file *file);
+int parse_elf32(t_file *file, t_elf32 *elf32);
+int infect_elf32(t_file *file, t_elf32 *elf32);
+int sign_elf32_cavity(t_file *file, t_elf32 *elf32);
 
 #endif
