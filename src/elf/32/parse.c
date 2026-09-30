@@ -6,13 +6,10 @@ static int check_phdrs_bounds(t_file *file, Elf32_Ehdr *ehdr)
 {
 	if (ehdr->e_phnum == 0)
 		return (0);
-
 	if (ehdr->e_phoff > file->size)
 		return (0);
-
 	if (ehdr->e_phnum * sizeof(Elf32_Phdr) > file->size - ehdr->e_phoff)
 		return (0);
-
 	return (1);
 }
 

@@ -16,10 +16,8 @@ static int get_entry_type(const char *full_path)
 
 	if (S_ISDIR(st.st_mode))
 		return (DT_DIR);
-
 	if (S_ISREG(st.st_mode))
 		return (DT_REG);
-
 	return (DT_UNKNOWN);
 }
 
@@ -43,7 +41,6 @@ void process_entry(const char *path, struct dirent *entry)
 
 	if (type == DT_DIR)
 		return (scan_directory(full_path));
-
 	if (type == DT_REG)
 		process_file(full_path);
 }
