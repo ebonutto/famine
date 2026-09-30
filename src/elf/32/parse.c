@@ -1,6 +1,6 @@
 #include "famine.h"
 
-#include <elf.h> // ElfN_Ehdr, ElfN_Phdr
+#include <elf.h> // Elf32_Ehdr, Elf32_Phdr
 
 int parse_elf32(t_file *file, t_elf32 *elf32)
 {

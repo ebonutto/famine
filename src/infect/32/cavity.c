@@ -1,7 +1,7 @@
 #include "famine.h"
 
-#include <elf.h> // ElfN_Phdr
-#include <stdint.h> // uintN_t, UINTN_MAX
+#include <elf.h> // Elf32_Phdr
+#include <stdint.h> // uintN_t, UINT32_MAX
 #include <string.h> // memcpy()
 
 static uint32_t elf32_find_next_segment(Elf32_Phdr *phdr, uint16_t phnum,
