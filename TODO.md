@@ -5,3 +5,4 @@
 [ ] Bonus -> Code a daemon
 [X] Understand mmap + open -> munmap problems ?
 [X] Clean code check
+[ ] Add debug mode
