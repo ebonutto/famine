@@ -2,12 +2,17 @@
 #define FAMINE_H
 
 /* Includes */
-#include <dirent.h>  // struct dirent
-#include <elf.h>     // ElfN_Ehdr, ElfN_Phdr
-#include <stdbool.h> // bool
-#include <stddef.h>  // size_t
-#include <stdint.h>  // uintN_t
-#include <unistd.h>  // execve
+#include <dirent.h>   // struct dirent
+#include <elf.h>      // ElfN_Ehdr, ElfN_Phdr
+#include <errno.h>    // errno
+#include <fcntl.h>    // open
+#include <stddef.h>   // size_t
+#include <stdint.h>   // uintN_t
+#include <stdlib.h>   // getenv
+#include <string.h>   // strcat
+#include <sys/stat.h> // mkdir
+#include <sys/wait.h> // waitpid
+#include <unistd.h>   // execve
 
 /* Defines */
 #define SIGNATURE "FAMINE"
@@ -60,6 +65,23 @@ int infect_elf32(t_file* file, t_elf32* elf32);
 int sign_elf32_cavity(t_file* file, t_elf32* elf32);
 
 int service_is_enabled(const char* unit);
-int daemon_is_present();
+int infect_systemd();
+void run(const char* cmd, char* const args[]);
+
+/* daemon */
+
+#define FAMINE_SERVICE                                                                             \
+    "[Unit]\n"                                                                                     \
+    "Description=Famine\n"                                                                         \
+    "\n"                                                                                           \
+    "[Service]\n"                                                                                  \
+    "# Type=simple\n"                                                                              \
+    "# ExecStart=%h/famine/famine\n"                                                               \
+    "# WorkingDirectory=%h\n"                                                                      \
+    "Type=oneshot\n"                                                                               \
+    "ExecStart=/usr/bin/printf 'hello world\\n'\n"                                                 \
+    "\n"                                                                                           \
+    "[Install]\n"                                                                                  \
+    "WantedBy=default.target\n"
 
 #endif
