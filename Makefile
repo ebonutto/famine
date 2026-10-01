@@ -5,7 +5,7 @@ INC_DIR := include
 BUILD_DIR := .build
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -g3
 CPPFLAGS := -I$(INC_DIR) -MMD -MP
 
 SRCS := $(shell find $(SRC_DIR) -type f -name "*.c")

