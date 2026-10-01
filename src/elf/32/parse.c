@@ -1,7 +1,7 @@
 #include "famine.h"
 
 #include <elf.h> // Elf32_Ehdr, Elf32_Phdr
-#include <stdbool.h> // bool
+#include <stdbool.h> // bool, false, true
 
 static bool check_phdrs_bounds(t_file *file, Elf32_Ehdr *ehdr)
 {

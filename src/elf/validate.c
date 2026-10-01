@@ -1,6 +1,7 @@
 #include "famine.h"
 
 #include <elf.h> // EI_NIDENT, EI_CLASS, EI_DATA, EI_MAGN, ELFCLASSN, ELFDATA2LSB, ELFMAGN
+#include <stdbool.h> // bool, false, true
 
 bool is_valid_elf(t_file *file)
 {

@@ -1,6 +1,7 @@
 #include "famine.h"
 
 #include <elf.h> // Elf32_Phdr
+#include <stdbool.h> // bool, false, true
 #include <stdint.h> // uintN_t, UINT32_MAX
 #include <string.h> // memcpy()
 
@@ -23,27 +24,27 @@ static uint32_t elf32_find_next_segment(Elf32_Phdr *phdr, uint16_t phnum,
 	return (next);
 }
 
-static int check_segment_bounds(t_file *file, Elf32_Phdr *phdr)
+static bool check_segment_bounds(t_file *file, Elf32_Phdr *phdr)
 {
 	if (phdr->p_offset > file->size)
-		return (0);
+		return (false);
 	if (phdr->p_filesz > file->size - phdr->p_offset)
-		return (0);
-	return (1);
+		return (false);
+	return (true);
 }
 
-static int is_valid_code_cave(t_file *file, uint32_t cave_start,
+static bool is_valid_code_cave(t_file *file, uint32_t cave_start,
                               uint32_t cave_end)
 {
 	if (cave_end == UINT32_MAX)
-		return (0);
+		return (false);
 	if (cave_end <= cave_start)
-		return (0);
+		return (false);
 	if (cave_end - cave_start < SIGNATURE_SIZE)
-		return (0);
+		return (false);
 	if (SIGNATURE_SIZE > file->size - cave_start)
-		return (0);
-	return (1);
+		return (false);
+	return (true);
 }
 
 int sign_elf32_cavity(t_file *file, t_elf32 *elf32)

@@ -1,5 +1,6 @@
 #include "famine.h"
 
+#include <stdbool.h> // bool, false
 #include <stddef.h> // NULL
 #include <string.h> // memmem()
 
