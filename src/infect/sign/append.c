@@ -11,7 +11,5 @@ int sign_generic_append(t_file *file)
 	written = pwrite(file->fd, SIGNATURE, SIGNATURE_SIZE, file->size);
 	if (written != (ssize_t)SIGNATURE_SIZE)
 		return (1);
-
-	file->size += SIGNATURE_SIZE;
 	return (0);
 }
