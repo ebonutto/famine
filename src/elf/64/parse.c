@@ -1,16 +1,17 @@
 #include "famine.h"
 
 #include <elf.h> // Elf64_Ehdr, Elf64_Phdr
+#include <stdbool.h> // bool
 
-static int check_phdrs_bounds(t_file *file, Elf64_Ehdr *ehdr)
+static bool check_phdrs_bounds(t_file *file, Elf64_Ehdr *ehdr)
 {
 	if (ehdr->e_phnum == 0)
-		return (0);
+		return (false);
 	if (ehdr->e_phoff > file->size)
-		return (0);
+		return (false);
 	if (ehdr->e_phnum * sizeof(Elf64_Phdr) > file->size - ehdr->e_phoff)
-		return (0);
-	return (1);
+		return (false);
+	return (true);
 }
 
 int parse_elf64(t_file *file, t_elf64 *elf64)

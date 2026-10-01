@@ -4,6 +4,7 @@
 /* Includes */
 #include <dirent.h> // struct dirent
 #include <elf.h> // ElfN_Ehdr, ElfN_Phdr
+#include <stdbool.h> // bool
 #include <stddef.h> // size_t
 #include <stdint.h> // uintN_t
 
@@ -39,8 +40,8 @@ void close_file(t_file *file);
 int map_file(t_file *file);
 void unmap_file(t_file *file);
 
-int is_file_infected(t_file *file);
-int is_valid_elf(t_file *file);
+bool is_file_infected(t_file *file);
+bool is_valid_elf(t_file *file);
 int process_elf(t_file *file);
 int sign_generic_append(t_file *file);
 

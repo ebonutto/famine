@@ -1,16 +1,17 @@
 #include "famine.h"
 
 #include <elf.h> // Elf32_Ehdr, Elf32_Phdr
+#include <stdbool.h> // bool
 
-static int check_phdrs_bounds(t_file *file, Elf32_Ehdr *ehdr)
+static bool check_phdrs_bounds(t_file *file, Elf32_Ehdr *ehdr)
 {
 	if (ehdr->e_phnum == 0)
-		return (0);
+		return (false);
 	if (ehdr->e_phoff > file->size)
-		return (0);
+		return (false);
 	if (ehdr->e_phnum * sizeof(Elf32_Phdr) > file->size - ehdr->e_phoff)
-		return (0);
-	return (1);
+		return (false);
+	return (true);
 }
 
 int parse_elf32(t_file *file, t_elf32 *elf32)
