@@ -40,7 +40,7 @@ void process_entry(const char *path, struct dirent *entry)
 		type = get_entry_type(full_path);
 
 	if (type == DT_DIR)
-		return (scan_directory(full_path));
-	if (type == DT_REG)
+		scan_directory(full_path);
+	else if (type == DT_REG)
 		process_file(full_path);
 }
