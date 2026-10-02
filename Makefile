@@ -16,7 +16,7 @@ WOODY_DIR := woody-woodpacker
 WOODY_REPO := https://github.com/ebonutto/woody_woodpacker.git
 WOODY_BIN := $(WOODY_DIR)/woody_woodpacker
 
-.PHONY: all woody clean fclean rclean re
+.PHONY: all verbose woody clean fclean rclean re
 
 all: $(NAME)
 
@@ -26,6 +26,9 @@ $(NAME): $(OBJS)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+
+verbose: CPPFLAGS += -DVERBOSE
+verbose: re
 
 woody: $(NAME) $(WOODY_BIN)
 	$(WOODY_BIN) $(NAME)
