@@ -8,6 +8,8 @@ void scan_directory(const char *path)
 	DIR *dir;
 	struct dirent *entry;
 
+	LOG("[*] Scanning directory: %s\n", path);
+
 	dir = opendir(path);
 	if (dir == NULL)
 		return ;
