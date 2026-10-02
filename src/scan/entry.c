@@ -5,7 +5,7 @@
 #include <limits.h> // PATH_MAX
 #include <stddef.h> // size_t
 #include <stdio.h> // snprintf()
-#include <string.h> // strcmp()
+#include <string.h> // strcmp(), strlen()
 
 static int get_entry_type(const char *full_path)
 {
@@ -24,14 +24,18 @@ static int get_entry_type(const char *full_path)
 void process_entry(const char *path, struct dirent *entry)
 {
 	char full_path[PATH_MAX];
+	size_t len;
 	int ret, type;
 
 	if (strcmp(entry->d_name, ".") == 0
 	    || strcmp(entry->d_name, "..") == 0)
 		return ;
 
-	ret = snprintf(full_path, sizeof(full_path), "%s/%s",
-	               path, entry->d_name);
+	len = strlen(path);
+	ret = snprintf(full_path, sizeof(full_path), "%s%s%s",
+	               path,
+	               (len > 0 && path[len - 1] == '/') ? "" : "/",
+	               entry->d_name);
 	if (ret < 0 || (size_t)ret >= sizeof(full_path))
 		return ;
 
