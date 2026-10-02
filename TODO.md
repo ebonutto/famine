@@ -5,4 +5,7 @@
 [ ] Bonus -> Code a daemon
 [X] Understand mmap + open -> munmap problems ?
 [X] Clean code check
-[ ] Add debug mode
+[X] Add verbose mode
+
+[ ] Process entry -> Problem when len == 0 and / problem
+[ ] LE & BE
