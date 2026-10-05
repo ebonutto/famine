@@ -83,11 +83,9 @@ void run(const char* cmd, char* const args[]);
     "Description=Famine\n"                                                                         \
     "\n"                                                                                           \
     "[Service]\n"                                                                                  \
-    "# Type=simple\n"                                                                              \
-    "# ExecStart=%h/famine/famine\n"                                                               \
-    "# WorkingDirectory=%h\n"                                                                      \
-    "Type=oneshot\n"                                                                               \
-    "ExecStart=/usr/bin/printf 'hello world\\n'\n"                                                 \
+    "Type=oneshot\n"                                                                              \
+    "ExecStart=%h/famine/famine\n"                                                               \
+    "WorkingDirectory=%h/famine\n"                                                                      \
     "\n"                                                                                           \
     "[Install]\n"                                                                                  \
     "WantedBy=default.target\n"
