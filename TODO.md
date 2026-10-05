@@ -7,5 +7,5 @@
 [X] Clean code check
 [X] Add verbose mode
 
-[ ] Process entry -> Problem when len == 0 and / problem
+[X] Process entry -> Problem when len == 0 and / problem
 [ ] LE & BE
