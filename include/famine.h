@@ -13,6 +13,7 @@
 #include <sys/stat.h> // mkdir
 #include <sys/wait.h> // waitpid
 #include <unistd.h>   // execve
+#include <stdbool.h>  // bool
 
 /* Macros */
 #define SIGNATURE "FAMINE"
