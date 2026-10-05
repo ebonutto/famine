@@ -31,10 +31,10 @@ void process_entry(const char *path, struct dirent *entry)
 	    || strcmp(entry->d_name, "..") == 0)
 		return ;
 
-	len = strlen(path);
+	len = strlen(path); // Length cannot be 0
 	ret = snprintf(full_path, sizeof(full_path), "%s%s%s",
 	               path,
-	               (len > 0 && path[len - 1] == '/') ? "" : "/",
+	               path[len - 1] == '/' ? "" : "/",
 	               entry->d_name);
 	if (ret < 0 || (size_t)ret >= sizeof(full_path))
 		return ;

