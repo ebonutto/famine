@@ -8,6 +8,5 @@ int process_elf64(t_file *file)
 		LOG("[!] Failed to parse ELF64\n");
 		return (1);
 	}
-
 	return (infect_elf64(file, &elf64));
 }
