@@ -20,13 +20,12 @@ mkdir -p "$SERVICE_DIR"
 # Generate the systemd user unit
 cat > "$SERVICE_FILE" <<EOF
 [Unit]
-Description=Famine
+Description=famine
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=$FAMINE_BIN
-WorkingDirectory=$FAMINE_DIR
 
 [Install]
 WantedBy=default.target
