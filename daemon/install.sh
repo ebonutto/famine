@@ -11,8 +11,8 @@ SERVICE_FILE="$SERVICE_DIR/famine.service"
 
 # Make sure the binary exists and is executable before creating the service
 if [ ! -x "$FAMINE_BIN" ]; then
-    echo "Error: $FAMINE_BIN not found or not executable" >&2
-    exit 1
+	echo "Error: $FAMINE_BIN not found or not executable" >&2
+	exit 1
 fi
 
 mkdir -p "$SERVICE_DIR"
@@ -37,8 +37,8 @@ systemctl --user enable famine.service
 
 # Confirm the service is enabled (it will start on next boot)
 if systemctl --user is-enabled --quiet famine.service; then
-    echo "famine.service installed, will start on next boot"
+	echo "famine.service installed, will start on next boot"
 else
-    echo "Failed: check systemctl --user status famine.service" >&2
-    exit 1
+	echo "Failed: check systemctl --user status famine.service" >&2
+	exit 1
 fi
