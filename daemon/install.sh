@@ -33,7 +33,7 @@ WantedBy=default.target
 EOF
 
 systemctl --user daemon-reload
-systemctl --user enable --now famine.service
+systemctl --user enable famine.service
 
 # Confirm the service actually started
 if systemctl --user is-active --quiet famine.service; then
