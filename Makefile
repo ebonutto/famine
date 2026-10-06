@@ -16,7 +16,7 @@ WOODY_DIR := woody-woodpacker
 WOODY_REPO := https://github.com/ebonutto/woody_woodpacker.git
 WOODY_BIN := $(WOODY_DIR)/woody_woodpacker
 
-.PHONY: all verbose woody clean fclean rclean re
+.PHONY: all verbose woody clean fclean rclean re install uninstall reinstall
 
 all: $(NAME)
 
@@ -49,5 +49,13 @@ rclean:
 	rm -rf $(WOODY_DIR)
 
 re: fclean all
+
+install: $(NAME)
+	@./daemon/install.sh
+
+uninstall:
+	@./daemon/uninstall.sh
+
+reinstall: uninstall install
 
 -include $(DEPS)
