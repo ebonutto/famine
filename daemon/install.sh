@@ -36,7 +36,7 @@ systemctl --user enable famine.service
 
 # Confirm the service is enabled (it will start on next user session start)
 if systemctl --user is-enabled --quiet famine.service; then
-	echo "famine.service installed, will start on next boot"
+	echo "famine.service installed, will start on next session start"
 else
 	echo "Failed: check systemctl --user status famine.service" >&2
 	exit 1
