@@ -12,8 +12,9 @@ typedef struct s_range {
 
 static bool check_segment_bounds(t_file *file, Elf64_Phdr *phdr)
 {
-	if (phdr->p_offset > file->size
-	    || phdr->p_filesz > file->size - phdr->p_offset)
+	if (phdr->p_offset > file->size)
+		return (false);
+	if (phdr->p_filesz > file->size - phdr->p_offset)
 		return (false);
 	return (true);
 }
