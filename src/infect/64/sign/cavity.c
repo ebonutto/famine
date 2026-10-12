@@ -18,7 +18,8 @@ static bool check_segment_bounds(t_file *file, Elf64_Phdr *phdr)
 	return (true);
 }
 
-static uint16_t get_segments_ranges(t_file *file, t_elf64 *elf64, t_range *ranges)
+static uint16_t get_segments_ranges(t_file *file, t_elf64 *elf64,
+                                    t_range *ranges)
 {
 	uint16_t count;
 
@@ -29,7 +30,8 @@ static uint16_t get_segments_ranges(t_file *file, t_elf64 *elf64, t_range *range
 			continue ;
 
 		ranges[count].start = elf64->phdr[i].p_offset;
-		ranges[count].end = ranges[count].start + elf64->phdr[i].p_filesz;
+		ranges[count].end = ranges[count].start
+		                  + elf64->phdr[i].p_filesz;
 		count++;
 	}
 	return (count);
