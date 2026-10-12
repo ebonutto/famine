@@ -2,7 +2,7 @@
 
 #include <elf.h> // Elf64_Phdr
 #include <stdbool.h> // bool, false, true
-#include <stdint.h> // uintN_t, UINT64_MAX
+#include <stdint.h> // intN_t, uintN_t
 #include <string.h> // memcpy()
 
 typedef struct s_range {
@@ -12,9 +12,8 @@ typedef struct s_range {
 
 static bool check_segment_bounds(t_file *file, Elf64_Phdr *phdr)
 {
-	if (phdr->p_offset > file->size)
-		return (false);
-	if (phdr->p_filesz > file->size - phdr->p_offset)
+	if (phdr->p_offset > file->size
+	    || phdr->p_filesz > file->size - phdr->p_offset)
 		return (false);
 	return (true);
 }
@@ -25,7 +24,8 @@ static uint16_t get_segments_ranges(t_file *file, t_elf64 *elf64, t_range *range
 
 	count = 0;
 	for (uint32_t i = 0; i < elf64->ehdr->e_phnum; i++) {
-		if (!check_segment_bounds(file, &elf64->phdr[i])) // p_offset and p_filesz can e both 0
+		if (!check_segment_bounds(file, &elf64->phdr[i])
+		    || elf64->phdr[i].p_filesz == 0)
 			continue ;
 
 		ranges[count].start = elf64->phdr[i].p_offset;
@@ -37,8 +37,8 @@ static uint16_t get_segments_ranges(t_file *file, t_elf64 *elf64, t_range *range
 
 static void sort_ranges(t_range *ranges, uint16_t count)
 {
-	t_range	key;
-	int16_t	j;
+	t_range key;
+	int32_t j;
 
 	for (uint16_t i = 1; i < count; i++) {
 		key = ranges[i];
@@ -51,16 +51,15 @@ static void sort_ranges(t_range *ranges, uint16_t count)
 	}
 }
 
-static uint64_t find_code_cave(t_file *file, t_range *ranges, uint16_t count)
+static uint64_t find_code_cave(t_range *ranges, uint16_t count)
 {
 	uint64_t end;
 
 	end = ranges[0].end;
 	for (uint32_t i = 1; i < count; i++) {
-		if (ranges[i].start > end) {
-			if (ranges[i].start - end >= SIGNATURE_SIZE)
-				return (end);
-		}
+		if (ranges[i].start > end
+		    && ranges[i].start - end >= SIGNATURE_SIZE)
+			return (end);
 		if (ranges[i].end > end)
 			end = ranges[i].end;
 	}
@@ -74,12 +73,12 @@ int sign_elf64_cavity(t_file *file, t_elf64 *elf64)
 	uint64_t cave;
 
 	count = get_segments_ranges(file, elf64, ranges);
-	if (count == 0)
+	if (count < 2)
 		return (1);
 
 	sort_ranges(ranges, count);
 
-	cave = find_code_cave(file, ranges, count);
+	cave = find_code_cave(ranges, count);
 	if (cave == 0)
 		return (1);
 
