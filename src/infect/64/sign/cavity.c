@@ -2,7 +2,7 @@
 
 #include <elf.h> // Elf64_Phdr
 #include <stdbool.h> // bool, false, true
-#include <stdint.h> // intN_t, uintN_t
+#include <stdint.h> // int32_t, uintN_t
 #include <string.h> // memcpy()
 
 typedef struct s_range {

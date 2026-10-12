@@ -2,27 +2,13 @@
 
 #include <elf.h> // Elf32_Phdr
 #include <stdbool.h> // bool, false, true
-#include <stdint.h> // uintN_t, UINT32_MAX
+#include <stdint.h> // int32_t, uintN_t
 #include <string.h> // memcpy()
 
-static uint32_t elf32_find_next_segment(Elf32_Phdr *phdr, uint16_t phnum,
-                                        uint16_t index)
-{
-	uint32_t curr, next, tmp;
-
-	curr = phdr[index].p_offset;
-	next = UINT32_MAX;
-
-	for (uint32_t i = 0; i < phnum; i++) {
-		if (i == index)
-			continue ;
-
-		tmp = phdr[i].p_offset;
-		if (tmp > curr && tmp < next)
-			next = tmp;
-	}
-	return (next);
-}
+typedef struct s_range {
+	uint32_t start;
+	uint32_t end;
+} t_range;
 
 static bool check_segment_bounds(t_file *file, Elf32_Phdr *phdr)
 {
@@ -33,38 +19,72 @@ static bool check_segment_bounds(t_file *file, Elf32_Phdr *phdr)
 	return (true);
 }
 
-static bool is_valid_code_cave(t_file *file, uint32_t cave_start,
-                              uint32_t cave_end)
+static uint16_t get_segments_ranges(t_file *file, t_elf32 *elf32,
+                                    t_range *ranges)
 {
-	if (cave_end == UINT32_MAX)
-		return (false);
-	if (cave_end <= cave_start)
-		return (false);
-	if (cave_end - cave_start < SIGNATURE_SIZE)
-		return (false);
-	if (SIGNATURE_SIZE > file->size - cave_start)
-		return (false);
-	return (true);
+	uint16_t count;
+
+	count = 0;
+	for (uint32_t i = 0; i < elf32->ehdr->e_phnum; i++) {
+		if (!check_segment_bounds(file, &elf32->phdr[i])
+		    || elf32->phdr[i].p_filesz == 0)
+			continue ;
+
+		ranges[count].start = elf32->phdr[i].p_offset;
+		ranges[count].end = ranges[count].start
+		                  + elf32->phdr[i].p_filesz;
+		count++;
+	}
+	return (count);
+}
+
+static void sort_ranges(t_range *ranges, uint16_t count)
+{
+	t_range key;
+	int32_t j;
+
+	for (uint16_t i = 1; i < count; i++) {
+		key = ranges[i];
+		j = i - 1;
+		while (j >= 0 && ranges[j].start > key.start) {
+			ranges[j + 1] = ranges[j];
+			j--;
+		}
+		ranges[j + 1] = key;
+	}
+}
+
+static uint32_t find_code_cave(t_range *ranges, uint16_t count)
+{
+	uint32_t end;
+
+	end = ranges[0].end;
+	for (uint32_t i = 1; i < count; i++) {
+		if (ranges[i].start > end
+		    && ranges[i].start - end >= SIGNATURE_SIZE)
+			return (end);
+		if (ranges[i].end > end)
+			end = ranges[i].end;
+	}
+	return (0);
 }
 
 int sign_elf32_cavity(t_file *file, t_elf32 *elf32)
 {
-	uint32_t cave_start, cave_end;
+	t_range ranges[elf32->ehdr->e_phnum];
+	uint16_t count;
+	uint32_t cave;
 
-	for (uint32_t i = 0; i < elf32->ehdr->e_phnum; i++) {
-		if (!check_segment_bounds(file, &elf32->phdr[i]))
-			continue ;
+	count = get_segments_ranges(file, elf32, ranges);
+	if (count < 2)
+		return (1);
 
-		cave_start = elf32->phdr[i].p_offset + elf32->phdr[i].p_filesz;
-		cave_end = elf32_find_next_segment(elf32->phdr,
-		                                   elf32->ehdr->e_phnum,
-		                                   (uint16_t)i);
+	sort_ranges(ranges, count);
 
-		if (!is_valid_code_cave(file, cave_start, cave_end))
-			continue ;
+	cave = find_code_cave(ranges, count);
+	if (cave == 0)
+		return (1);
 
-		memcpy(file->map + cave_start, SIGNATURE, SIGNATURE_SIZE);
-		return (0);
-	}
-	return (1);
+	memcpy(file->map + cave, SIGNATURE, SIGNATURE_SIZE);
+	return (0);
 }
